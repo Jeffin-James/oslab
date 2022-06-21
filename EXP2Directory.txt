@@ -1,0 +1,89 @@
+Aim:
+To execute the program for System calls in unix.
+A)Program for system calls(OPENDIR,READDIR,CLOSEDIR)
+Algorithm:
+1. Read the directory name from the user.
+2. Open the directory.
+3. If the directory is not found,display an error.
+4. Otherwise read the directory.
+5. Display the files in the directory.
+6. Close the directory.
+PROGRAM:
+#include<stdio.h>
+#include<dirent.h>
+struct dirent *dptr;
+int main(int argc, char *argv[])
+{
+char buff[100];
+DIR *dirp;
+printf(“\n\n ENTER DIRECTORY NAME”);
+scanf(“%s”, buff);
+if((dirp=opendir(buff))==NULL)
+{
+printf(“The given directory does not exist”);
+exit(1);
+}
+while(dptr=readdir(dirp))
+{
+printf(“%s\n”,dptr->d_name);
+}
+closedir(dirp);
+}
+B) Program for System calls(Fork,Getpid,Exit)
+Algorithm:
+1. Assign pid and assign the values using fork() function.
+2. If the pid value is negative,display an error.
+3. If the pid value is not equal to zero ,display the parent process id.
+4. Otherwise display the child process id.
+
+PROGRAM:
+#include<stdio.h>
+#include<unistd.h>
+main()
+{
+int pid,pid1,pid2;
+pid=fork();
+if(pid==-1)
+{
+printf(“ERROR IN PROCESS CREATION \n”);
+exit(1);
+}
+if(pid!=0)
+{
+pid1=getpid();
+printf(“\n the parent process ID is %d\n”, pid1);
+}
+else
+{
+pid2=getpid();
+printf(“\n the child process ID is %d\n”, pid2);
+}
+}
+
+C) Program for System call (LS)
+Algorithm:
+1. Read a directory name.
+2. Open the directory.
+3. If the directory is empty, display no files in the directory.
+4. Otherwise list all the file names in the directory
+PROGRAM:
+#include<stdio.h>
+#include<dirent.h>
+main()
+{
+char dirname[10];
+DIR*p;
+struct dirent *d;
+printf("Enter directory name\n");
+scanf("%s",dirname);
+p=opendir(dirname);
+if(p==NULL)
+  {
+  perror("Cannot find directory");
+  exit(-1);
+  }
+while(d=readdir(p))
+  printf("%s\n",d->d_name);
+}
+Result:
+Thus the program to simulate system calls in unix operating system is executed and verified.
